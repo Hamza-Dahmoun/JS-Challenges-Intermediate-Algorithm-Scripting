@@ -80,23 +80,45 @@ function whatIsInAName(collection, source) {
     // We will use the Object.keys() which returns an array of object keys
     //We will also use array.indexOf() method to check whether element exist in array, to check whether a key exist in an object
     var arr = [];
-    //console.log(Object.keys(source));
+
     // Only change code below this line
     for (let i = 0; i < collection.length; i++) {
-        //console.log(Object.keys(collection[i]));
-        if (Object.keys(collection[i]).indexOf(Object.keys(source)) != -1) {//so this collection[i] object contains the same key as in 'source' object ... lets check values now
-            if (collection[i][Object.keys(source)[0]] == source[Object.keys(source)[0]]) {
-                //so values are equal too
-                console.log("same");
+        //for each 'key' in the object source, we're going to check whether 'key' exist in object 'collection[i]', then, check if they have same value
+        let keys_andValues_exist = true;
+        for(let key in source){
+            //console.log(key);
+            if(collection[i].hasOwnProperty(key)){
+                //so the 'key' of object source does exist in object collection[i], lets now check if they're equal
+                if(source[key] == collection[i][key]){
+                    //so the value of 'key' in object collection[i] and object source are equal
+                    //do nothing
+                }
+                else{
+                    keys_andValues_exist = false;
+                }
             }
+            else{
+                keys_andValues_exist = false;
+            }            
+        }
+        if(keys_andValues_exist){
+            //so the keys and values of object source are the same in this object collection[i]
+            arr.push(collection[i]);
         }
     }
     // Only change code above this line
     return arr;
 }
 
-console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" })); //should return { last: "Capulet" } 
-console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" })); // should return [{ first: "Tybalt", last: "Capulet" }]  
-console.log(whatIsInAName([{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }], { "apple": 1 })); //should return [{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }]
-//
-  //
+console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }));
+// should return [{ first: "Tybalt", last: "Capulet" }].
+console.log(whatIsInAName([{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }], { "apple": 1 }));
+//should return [{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }].
+console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "bat": 2 }));
+//should return [{ "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }].
+console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "apple": 1 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "cookie": 2 }));
+//should return [{ "apple": 1, "bat": 2, "cookie": 2 }].
+console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "apple": 1 }, { "apple": 1, "bat": 2, "cookie": 2 }, { "bat":2 }], { "apple": 1, "bat": 2 }));
+//should return [{ "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie":2 }].
+console.log(whatIsInAName([{"a": 1, "b": 2, "c": 3}], {"a": 1, "b": 9999, "c": 3}));
+//should return []
