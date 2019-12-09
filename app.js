@@ -42,3 +42,26 @@ function diffArray(arr1, arr2) {
   diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
 //
 //
+/************************************ 3. Seek and Destroy ************/
+/* You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments. Remove all elements from the initial array that are of the same value as these arguments.
+
+Note
+You have to use the arguments object. */
+
+function destroyer(...args) {
+    // Remove all the values
+    //console.log(args.length);
+    for (let i = 1; i < args.length; i++) {
+        let index = args[0].indexOf(args[i]);
+        while (index != -1) {
+            args[0].splice(index, 1);
+            index = args[0].indexOf(args[i]);
+        }
+    }
+    console.log(args[0]);
+    return args[0];
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3);
+//
+//
