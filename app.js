@@ -3,21 +3,21 @@
 
 For example, sumAll([4,1]) should return 10 because sum of all the numbers between 1 and 4 (both inclusive) is 10. */
 function sumAll(arr) {
-    let sum=0;
-    let min=0, max=0;
-    if(arr[0]>arr[1]){
-      max = arr[0];
-      min = arr[1];
+    let sum = 0;
+    let min = 0, max = 0;
+    if (arr[0] > arr[1]) {
+        max = arr[0];
+        min = arr[1];
     }
-    else{
-      max = arr[1];
-      min = arr[0];
+    else {
+        max = arr[1];
+        min = arr[0];
     }
-    for(let i=min; i<=max; i++) sum=sum+i;
+    for (let i = min; i <= max; i++) sum = sum + i;
     return sum;
-  }
-  
-  sumAll([1, 4]);
+}
+
+//sumAll([1, 4]);
 
 //
 //
@@ -30,16 +30,16 @@ Note
 You can return the array with its elements in any order. */
 function diffArray(arr1, arr2) {
     var newArr = [];
-    for(let i=0; i<arr1.length; i++){
-      if(arr2.indexOf(arr1[i])==-1) newArr.push(arr1[i]); 
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr2.indexOf(arr1[i]) == -1) newArr.push(arr1[i]);
     }
-    for(let i=0; i<arr2.length; i++){
-      if(arr1.indexOf(arr2[i])==-1) newArr.push(arr2[i]);
+    for (let i = 0; i < arr2.length; i++) {
+        if (arr1.indexOf(arr2[i]) == -1) newArr.push(arr2[i]);
     }
     return newArr;
-  }
-  
-  diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
+}
+
+//diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
 //
 //
 /************************************ 3. Seek and Destroy ************/
@@ -62,6 +62,41 @@ function destroyer(...args) {
     return args[0];
 }
 
-destroyer([1, 2, 3, 1, 2, 3], 2, 3);
+//destroyer([1, 2, 3, 1, 2, 3], 2, 3);
 //
 //
+/************************************ 4. Wherefore art thou ************/
+/* Make a function that looks through an array of objects (first argument) and returns an array of all objects that 
+that have matching name and value pairs (second argument). Each name and value pair of the source object has to be present in 
+the object from the collection if it is to be included in the returned array.
+
+For example, if the first argument is 
+[{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], 
+and the second argument is { last: "Capulet" }, 
+then you must return the third object from the array (the first argument), because it contains the name and its value, 
+that was passed on as the second argument. */
+
+function whatIsInAName(collection, source) {
+    // We will use the Object.keys() which returns an array of object keys
+    //We will also use array.indexOf() method to check whether element exist in array, to check whether a key exist in an object
+    var arr = [];
+    //console.log(Object.keys(source));
+    // Only change code below this line
+    for (let i = 0; i < collection.length; i++) {
+        //console.log(Object.keys(collection[i]));
+        if (Object.keys(collection[i]).indexOf(Object.keys(source)) != -1) {//so this collection[i] object contains the same key as in 'source' object ... lets check values now
+            if (collection[i][Object.keys(source)[0]] == source[Object.keys(source)[0]]) {
+                //so values are equal too
+                console.log("same");
+            }
+        }
+    }
+    // Only change code above this line
+    return arr;
+}
+
+console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" })); //should return { last: "Capulet" } 
+console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" })); // should return [{ first: "Tybalt", last: "Capulet" }]  
+console.log(whatIsInAName([{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }], { "apple": 1 })); //should return [{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }]
+//
+  //
