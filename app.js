@@ -110,15 +110,71 @@ function whatIsInAName(collection, source) {
     return arr;
 }
 
-console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }));
+//console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }));
 // should return [{ first: "Tybalt", last: "Capulet" }].
-console.log(whatIsInAName([{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }], { "apple": 1 }));
+//console.log(whatIsInAName([{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }], { "apple": 1 }));
 //should return [{ "apple": 1 }, { "apple": 1 }, { "apple": 1, "bat": 2 }].
-console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "bat": 2 }));
+//console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "bat": 2 }));
 //should return [{ "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie": 2 }].
-console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "apple": 1 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "cookie": 2 }));
+//console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "apple": 1 }, { "apple": 1, "bat": 2, "cookie": 2 }], { "apple": 1, "cookie": 2 }));
 //should return [{ "apple": 1, "bat": 2, "cookie": 2 }].
-console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "apple": 1 }, { "apple": 1, "bat": 2, "cookie": 2 }, { "bat":2 }], { "apple": 1, "bat": 2 }));
+//console.log(whatIsInAName([{ "apple": 1, "bat": 2 }, { "apple": 1 }, { "apple": 1, "bat": 2, "cookie": 2 }, { "bat":2 }], { "apple": 1, "bat": 2 }));
 //should return [{ "apple": 1, "bat": 2 }, { "apple": 1, "bat": 2, "cookie":2 }].
-console.log(whatIsInAName([{"a": 1, "b": 2, "c": 3}], {"a": 1, "b": 9999, "c": 3}));
+//console.log(whatIsInAName([{"a": 1, "b": 2, "c": 3}], {"a": 1, "b": 9999, "c": 3}));
 //should return []
+//
+//
+/************************************ 5. Spinal Tap Case ************/
+/*
+Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
+ */
+function spinalCase(str) {
+    // "It's such a fine line between stupid, and clever."
+    // --David St. Hubbins    
+    let whiteSpaceRegEx = /\s/g;//Regex to check whether there are whiteSpaces
+    let underScoreRegEx = /_/g;//Regex to check whether there are whiteSpaces
+    if(whiteSpaceRegEx.test(str)){
+        //so there are white spaces, lets replace them by a dashes
+        str = str.split(" ").join("-");
+    }
+    if(underScoreRegEx.test(str)){
+        //so there are underscores, lets replace them by dashes
+        str = str.split("_").join("-");
+    }
+    let s=str[0];
+    let i=1;
+    while(i<str.length){
+        //we assume that str contains uppercases in the middle, which means that uppercase letter is the start of a new word,
+        //so we'll build out of that a new string that replaces the uppercase by a "an empty space + lowercase"
+        if(str[i] == "-") {
+            //since this is a dash then we know that the coming letter is upper case & first letter of a word, lets move to the second letter of that word 
+            s=s+str[i]+str[i+1];
+            i=i+2;
+        }
+        else{
+            if(str[i] == str[i].toUpperCase()){
+                let letterRegex = /[a-z]/g;
+                //lets check if the character before the upperCase letter is a letter or not
+                if(letterRegex.test(str[i-1])){
+                    //so the character before was a letter, it means that character str[i-1] is the last letter of a word, and str[i] is the first letter of a new word
+                    s=s+"-"+str[i].toLowerCase();
+                    i++;
+                }
+                else{
+                    s=s+str[i].toLowerCase();
+                    i++;
+                }
+            }
+            else{
+                s=s+str[i];
+                i++;
+            }
+        }
+        
+    }
+    
+    return s.toLowerCase();
+  }
+  
+  console.log(spinalCase('This Is Spinal Tap'));
+  console.log(spinalCase('This_Is SpinalTap'));
