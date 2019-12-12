@@ -313,3 +313,34 @@ function text_to_wordsArray(str) {
 
 //console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped"));//returns "A quick brown fox jumped over the lazy dog"
 //console.log(myReplace("He is Sleeping on the couch", "Sleeping", "sitting"));//returns "He is Sitting on the couch"
+//
+//
+/************************************ 8. DNA Pairing ************/
+/*
+The DNA strand is missing the pairing element. Take each character, get its pair, and return the results as a 2d array.
+
+Base pairs are a pair of AT and CG. Match the missing element to the provided character.
+
+Return the provided character as the first element in each array.
+
+For example, for the input GCG, return [["G", "C"], ["C","G"],["G", "C"]]
+
+The character and its pair are paired up in an array, and all the arrays are grouped into one encapsulating array.
+*/
+var pairs = {
+    A: "T",
+    T: "A",
+    C: "G",
+    G: "C"
+}
+function pairElement(str) {
+    let arr = [];
+    for(let i=0; i<str.length; i++){
+        let onePair = [str[i]];
+        onePair.push(pairs[str[i]]);
+        arr.push(onePair);
+    }
+    return arr;
+  }
+  
+  //console.log(pairElement("GCG"));
