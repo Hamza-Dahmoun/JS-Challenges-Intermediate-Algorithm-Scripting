@@ -371,3 +371,35 @@ function fearNotLetter(str) {
 //console.log(fearNotLetter("stvwx"));// should return "u".
 //console.log(fearNotLetter("bcdf"));// should return "e".
 //console.log(fearNotLetter("abcdefghijklmnopqrstuvwxyz"));// should return undefined.
+
+//
+//
+/************************************ 10. Sorted Union ************/
+/*
+Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+
+In other words, all values present from all arrays should be included in their original order, but with no duplicates in the final array.
+
+The unique numbers should be sorted by their original order, but the final array should not be sorted in numerical order.
+
+Check the assertion tests for examples.
+*/
+
+//we'll use Rest parameter in function to pass variable number of arguments in uniteUnique function
+function uniteUnique(...arrays) {
+    //console.log("you have passed " + arrays.length + " arrays");
+    let uniqueArr = [];
+    for(let i=0; i<arrays.length; i++){
+        for(let j=0; j<arrays[i].length; j++){
+            if(uniqueArr.indexOf(arrays[i][j]) == -1){
+                //so this is a new number, lets push it to our array
+                uniqueArr.push(arrays[i][j]);
+            }
+        }        
+    }
+    return uniqueArr;
+  }
+  
+  //console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1])) ;//should return [1, 3, 2, 5, 4]
+  //console.log(uniteUnique([1, 2, 3], [5, 2, 1]));// should return [1, 2, 3, 5].
+  //console.log(uniteUnique([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]));// should return [1, 2, 3, 5, 4, 6, 7, 8]
