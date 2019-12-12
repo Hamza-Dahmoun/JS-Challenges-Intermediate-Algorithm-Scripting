@@ -335,12 +335,39 @@ var pairs = {
 }
 function pairElement(str) {
     let arr = [];
-    for(let i=0; i<str.length; i++){
+    for (let i = 0; i < str.length; i++) {
         let onePair = [str[i]];
         onePair.push(pairs[str[i]]);
         arr.push(onePair);
     }
     return arr;
-  }
-  
-  //console.log(pairElement("GCG"));
+}
+//console.log(pairElement("GCG"));//[["G", "C"], ["C", "G"], ["G", "C"]]
+
+//
+//
+/************************************ 9. Missing letters ************/
+/*
+Find the missing letter in the passed letter range and return it.
+
+If all letters are present in the range, return undefined.
+*/
+let allLetters = "abcdefghijklmnopqrstuvwxyz";
+function fearNotLetter(str) {
+    //first of all lets use the allLetters variable to get the index of the first letter of 'str' variable
+    let startIndex = allLetters.indexOf(str[0]);
+
+    //lets use startIndex to start looking for each letter of 'str' in 'allLetters'
+    for (let i = 1; i < allLetters.length; i++) {
+        if (str[i] != allLetters[startIndex + i]) {
+            return allLetters[startIndex + i];
+        }
+    }
+}
+
+//console.log(fearNotLetter("bce"));//returns 'd'
+//console.log(fearNotLetter("abce"));// should return "d".
+//console.log(fearNotLetter("abcdefghjklmno"));// should return "i".
+//console.log(fearNotLetter("stvwx"));// should return "u".
+//console.log(fearNotLetter("bcdf"));// should return "e".
+//console.log(fearNotLetter("abcdefghijklmnopqrstuvwxyz"));// should return undefined.
