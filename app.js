@@ -85,23 +85,23 @@ function whatIsInAName(collection, source) {
     for (let i = 0; i < collection.length; i++) {
         //for each 'key' in the object source, we're going to check whether 'key' exist in object 'collection[i]', then, check if they have same value
         let keys_andValues_exist = true;
-        for(let key in source){
+        for (let key in source) {
             //console.log(key);
-            if(collection[i].hasOwnProperty(key)){
+            if (collection[i].hasOwnProperty(key)) {
                 //so the 'key' of object source does exist in object collection[i], lets now check if they're equal
-                if(source[key] == collection[i][key]){
+                if (source[key] == collection[i][key]) {
                     //so the value of 'key' in object collection[i] and object source are equal
                     //do nothing
                 }
-                else{
+                else {
                     keys_andValues_exist = false;
                 }
             }
-            else{
+            else {
                 keys_andValues_exist = false;
-            }            
+            }
         }
-        if(keys_andValues_exist){
+        if (keys_andValues_exist) {
             //so the keys and values of object source are the same in this object collection[i]
             arr.push(collection[i]);
         }
@@ -133,48 +133,122 @@ function spinalCase(str) {
     // --David St. Hubbins    
     let whiteSpaceRegEx = /\s/g;//Regex to check whether there are whiteSpaces
     let underScoreRegEx = /_/g;//Regex to check whether there are whiteSpaces
-    if(whiteSpaceRegEx.test(str)){
+    if (whiteSpaceRegEx.test(str)) {
         //so there are white spaces, lets replace them by a dashes
         str = str.split(" ").join("-");
     }
-    if(underScoreRegEx.test(str)){
+    if (underScoreRegEx.test(str)) {
         //so there are underscores, lets replace them by dashes
         str = str.split("_").join("-");
     }
-    let s=str[0];
-    let i=1;
-    while(i<str.length){
+    let s = str[0];
+    let i = 1;
+    while (i < str.length) {
         //we assume that str contains uppercases in the middle, which means that uppercase letter is the start of a new word,
         //so we'll build out of that a new string that replaces the uppercase by a "an empty space + lowercase"
-        if(str[i] == "-") {
+        if (str[i] == "-") {
             //since this is a dash then we know that the coming letter is upper case & first letter of a word, lets move to the second letter of that word 
-            s=s+str[i]+str[i+1];
-            i=i+2;
+            s = s + str[i] + str[i + 1];
+            i = i + 2;
         }
-        else{
-            if(str[i] == str[i].toUpperCase()){
+        else {
+            if (str[i] == str[i].toUpperCase()) {
                 let letterRegex = /[a-z]/g;
                 //lets check if the character before the upperCase letter is a letter or not
-                if(letterRegex.test(str[i-1])){
+                if (letterRegex.test(str[i - 1])) {
                     //so the character before was a letter, it means that character str[i-1] is the last letter of a word, and str[i] is the first letter of a new word
-                    s=s+"-"+str[i].toLowerCase();
+                    s = s + "-" + str[i].toLowerCase();
                     i++;
                 }
-                else{
-                    s=s+str[i].toLowerCase();
+                else {
+                    s = s + str[i].toLowerCase();
                     i++;
                 }
             }
-            else{
-                s=s+str[i];
+            else {
+                s = s + str[i];
                 i++;
             }
         }
-        
+
     }
-    
+
     return s.toLowerCase();
-  }
-  
-  console.log(spinalCase('This Is Spinal Tap'));
-  console.log(spinalCase('This_Is SpinalTap'));
+}
+
+//console.log(spinalCase('This Is Spinal Tap'));
+//console.log(spinalCase('This_Is SpinalTap'));
+//
+//
+/************************************ 6. Pig Latin ************/
+/*
+Translate the provided string to pig latin.
+
+Pig Latin takes the first consonant (or consonant cluster) of an English word, moves it to the end of the word and suffixes an "ay".
+
+If a word begins with a vowel you just add "way" to the end.
+
+If a word does not contain a vowel, just add "ay" to the end.
+
+Input strings are guaranteed to be English words in all lowercase.
+*/
+
+function translatePigLatin(str) {
+    if (vowelStart(str))
+        //so it starts with a vowel, just add 'way' to the end
+        return str + "way";
+    else if (!vowelStart(str)) {
+        //so two cases: 1- start with a consonant but include a vowel 2- doesn't include any vowel
+        //lets check
+        if (includeVowel(str)){
+            //so it includes a vowel, so it starts with a consonant, lets move the consonant part to the end and add 'ay'   
+            let firstConsPart = getFirstConsonantPart(str); 
+            let remainingPart = str.slice(firstConsPart[0].length);
+            return remainingPart + firstConsPart[0] + "ay";
+        }
+        else{
+            //so it doesn't include any vowel, lets add 'ay' to the end
+            return str+'ay';
+        }
+            
+    }
+
+}
+function vowelStart(str) {
+    let reg = /^[aeiuo]/;//meaning: starts with vowel
+    //reg explanation:
+    //^: starts with
+    //[aeiuo]: vowel
+    return reg.test(str);
+}
+function consonantStart(str) {
+    let reg = /^(?![aeiuo])/;//meaning: str starts with not vowel
+    //reg explanation:
+    //^: starts with
+    //(?!): not
+    //[aeiuo]: vowel
+    return reg.test(str);
+}
+function includeVowel(str) {
+    let reg = /[aeiuo]/g;//meaning: include one or more vowel
+    //reg explanation:
+    // /[aeiuo]/: includes vowel
+    //g: may be more than once
+    return reg.test(str);
+}
+function getFirstConsonantPart(str){
+    //regex matches words that starts with consonant
+    let reg = /^([^aeiou])+/g;//meaning: str starts with one ore more consonant
+    //reg explanation:
+    //^: starts with
+    //([^aeiou]): not a vowel
+    //+: more than once
+
+    //console.log(reg.test(str));//true if str starts with consonant - false if str starts with a vowel
+    //console.log(str.match(reg));//prints the first consonant part of the word
+    return str.match(reg);
+}
+//console.log(translatePigLatin("california"));//aliforniacay
+//console.log(translatePigLatin("algorithm"));//algorithmway
+//console.log(translatePigLatin("schwartz"));//artzschway
+//console.log(translatePigLatin("rhythm"));//rhythmay
