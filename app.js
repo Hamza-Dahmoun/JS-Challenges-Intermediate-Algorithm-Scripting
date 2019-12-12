@@ -200,17 +200,17 @@ function translatePigLatin(str) {
     else if (!vowelStart(str)) {
         //so two cases: 1- start with a consonant but include a vowel 2- doesn't include any vowel
         //lets check
-        if (includeVowel(str)){
+        if (includeVowel(str)) {
             //so it includes a vowel, so it starts with a consonant, lets move the consonant part to the end and add 'ay'   
-            let firstConsPart = getFirstConsonantPart(str); 
+            let firstConsPart = getFirstConsonantPart(str);
             let remainingPart = str.slice(firstConsPart[0].length);
             return remainingPart + firstConsPart[0] + "ay";
         }
-        else{
+        else {
             //so it doesn't include any vowel, lets add 'ay' to the end
-            return str+'ay';
+            return str + 'ay';
         }
-            
+
     }
 
 }
@@ -236,7 +236,7 @@ function includeVowel(str) {
     //g: may be more than once
     return reg.test(str);
 }
-function getFirstConsonantPart(str){
+function getFirstConsonantPart(str) {
     //regex matches words that starts with consonant
     let reg = /^([^aeiou])+/g;//meaning: str starts with one ore more consonant
     //reg explanation:
@@ -252,3 +252,64 @@ function getFirstConsonantPart(str){
 //console.log(translatePigLatin("algorithm"));//algorithmway
 //console.log(translatePigLatin("schwartz"));//artzschway
 //console.log(translatePigLatin("rhythm"));//rhythmay
+//
+//
+/************************************ 7. Search and Replace ************/
+/*
+Perform a search and replace on the sentence using the arguments provided and return the new sentence.
+
+First argument is the sentence to perform the search and replace on.
+
+Second argument is the word that you will be replacing (before).
+
+Third argument is what you will be replacing the second argument with (after).
+
+Note
+Preserve the case of the first character in the original word when you are replacing it.
+For example if you mean to replace the word "Book" with the word "dog", it should be replaced as "Dog"
+*/
+
+function myReplace(str, before, after) {
+    //lets convert the text into array of words
+    let arr = text_to_wordsArray(str);
+
+    //we'll start iterating thru each item of the array to build the new array 'newarr' from them
+    let newarr = arr.map(item => {
+        //for current item of arr, lets see if is equal to the word stored in the variable 'before' 
+        if (item == before) {
+            //so it is the word we're looking for
+
+            //lets check if the first letter in this word is a capital letter or not
+            if (item.charAt(0) == item.charAt(0).toUpperCase()) {
+                //so it is a capital letter
+
+                //lets replace this word by the word stored in the variable 'after' but using a capital letter as first letter
+                item = after.charAt(0).toUpperCase() + after.substring(1);
+            }
+            else {
+                //so it is not a capital letter
+
+                //lets replace this word by the word stored in the variable 'after'
+                item = after;
+            }
+        }
+        return item;
+    })
+    return newarr.join(" ");
+}
+
+function text_to_wordsArray(str) {
+    //let regex = /([a-z])/g;//returns the text as an array of letters
+    //let regex = /(\w)/g;//returns the text as an array of letters
+    let regex = /(\w+)/g;//returns the text as an array of words
+    //regex explanation:
+    //\w: any character
+    //\w+: any character at least once
+    //(\w+): a word or a group of a characters that aren't seperated by a whitespace
+    //(\w+)/g: a group of words
+
+    return str.match(regex);
+}
+
+//console.log(myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped"));//returns "A quick brown fox jumped over the lazy dog"
+//console.log(myReplace("He is Sleeping on the couch", "Sleeping", "sitting"));//returns "He is Sitting on the couch"
