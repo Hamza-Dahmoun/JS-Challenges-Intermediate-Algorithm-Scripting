@@ -459,49 +459,49 @@ For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less
 */
 
 function sumFibs(num) {
-    let result =0;
-    if(num==0){
+    let result = 0;
+    if (num == 0) {
         result = 0;
     }
-    else if(num==1){
+    else if (num == 1) {
         result = 0;
     }
-    else{
-        result = sumOfOddInArray(getPreviousFibNumbers(num)); 
+    else {
+        result = sumOfOddInArray(getPreviousFibNumbers(num));
     }
     return result;
-  }
-  function getPreviousFibNumbers(num){
-      let arr= [1,1];
-      let newFib = arr[1] + arr[0];
-      while(newFib <= num){
-        newFib = arr[arr.length-2] + arr[arr.length-1];
-        if(newFib <= num){
+}
+function getPreviousFibNumbers(num) {
+    let arr = [1, 1];
+    let newFib = arr[1] + arr[0];
+    while (newFib <= num) {
+        newFib = arr[arr.length - 2] + arr[arr.length - 1];
+        if (newFib <= num) {
             arr.push(newFib);
-        }          
-      }
-      return arr;
-  }
-  function isOdd(number){
-      if(number%2!=0) return true;
-      else return false;
-  }
-  function sumOfOddInArray(arra){
-      let s = 0;
-      for(let i=0; i<arra.length; i++){
-          if(isOdd(arra[i]))
-          s = s + arra[i];
-      }
-      return s;
-  }
-  
-  //console.log(sumFibs(10));
-  //console.log(sumFibs(1000));// should return 1785.
-  //console.log(sumFibs(4000000));// should return 4613732.
-  //console.log(sumFibs(4));// should return 5.
-  //console.log(sumFibs(75024));// should return 60696.
-  //console.log(sumFibs(75025));// should return 135721.
-  
+        }
+    }
+    return arr;
+}
+function isOdd(number) {
+    if (number % 2 != 0) return true;
+    else return false;
+}
+function sumOfOddInArray(arra) {
+    let s = 0;
+    for (let i = 0; i < arra.length; i++) {
+        if (isOdd(arra[i]))
+            s = s + arra[i];
+    }
+    return s;
+}
+
+//console.log(sumFibs(10));
+//console.log(sumFibs(1000));// should return 1785.
+//console.log(sumFibs(4000000));// should return 4613732.
+//console.log(sumFibs(4));// should return 5.
+//console.log(sumFibs(75024));// should return 60696.
+//console.log(sumFibs(75025));// should return 135721.
+
 //
 //
 /************************************ 13. Sum All Primes ************/
@@ -512,23 +512,23 @@ For example, 2 is a prime number because it is only divisible by 1 and 2. In con
 Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
 */
 function sumPrimes(num) {
-    let sum=0;
+    let sum = 0;
     //lets iterate thru all numbers greater than one and less or equal to num, check if they are prime and calculate their sum
-    for(let i=2; i<=num; i++){
-        if(isPrime(i)){
-            sum=sum+i;
+    for (let i = 2; i <= num; i++) {
+        if (isPrime(i)) {
+            sum = sum + i;
         }
     }
     return sum;
 }
-function isPrime(num){
+function isPrime(num) {
     //1 and 0 are not prime
-    if(num==1 || num==0){
+    if (num == 1 || num == 0) {
         return false;
     }
-    else{
-        for(let i=2; i<num; i++){
-            if(num % i == 0){
+    else {
+        for (let i = 2; i < num; i++) {
+            if (num % i == 0) {
                 //so num is divisible by i ... num is not a prime number
                 return false;
             }
@@ -537,7 +537,67 @@ function isPrime(num){
         return true;
     }
 }
-  
-console.log(sumPrimes(7));  
-console.log(sumPrimes(10));// should return 17.
-console.log(sumPrimes(977));// should return 73156.
+
+//console.log(sumPrimes(7));  
+//console.log(sumPrimes(10));// should return 17.
+//console.log(sumPrimes(977));// should return 73156.
+
+//
+//
+/************************************ 14. Smallest Common Multiple ************/
+/*
+Find the smallest common multiple of the provided parameters that can be evenly divided by both,
+as well as by all sequential numbers in the range between these parameters.
+
+The range will be an array of two numbers that will not necessarily be in numerical order.
+
+For example, if given 1 and 3, find the smallest common multiple of both 1 and 3 that is also evenly divisible by
+all numbers between 1 and 3. The answer here would be 6.
+*/
+function smallestCommons(arr) {
+    //arr is an array contians two numbers: min and max
+    let max, min;
+    if (arr[0] > arr[1]) {
+        max = arr[0];
+        min = arr[1];
+    }
+    else {
+        max = arr[1];
+        min = arr[0];
+    }
+
+
+    //basically we'll check if min*max*counter is divisible by all numbers between min and max, knowing that 'counter' is incrementing from 1 and up
+    //we'll keep doing this until we found a number (= min*max*counter) which is divisible by all numbers between min and max
+    let notFound = true;
+    let counter = 0;
+    let result;
+    while(notFound) {
+        let divisible = true;
+        counter++;
+        for (let j = min + 1; j < max; j++) {            
+            if(!isDivisible(min*max*counter, j)){
+                divisible = false;
+            }
+        }
+        if(divisible){
+            notFound = false;
+            result = min*counter*max;
+        }        
+    }
+    return result;
+}
+
+function isDivisible(number, divider) {
+    //this function checks if number is divisible by divider and returns boolean
+    if (number % divider == 0) {
+        return true;
+    }
+    return false;
+}
+
+console.log(smallestCommons([1, 5]));// should return 60.
+console.log(smallestCommons([5, 1]));// should return 60.
+console.log(smallestCommons([2, 10]));// should return 2520.
+console.log(smallestCommons([1, 13]));// should return 360360.
+console.log(smallestCommons([23, 18]));// should return 6056820.
