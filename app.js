@@ -501,3 +501,43 @@ function sumFibs(num) {
   //console.log(sumFibs(4));// should return 5.
   //console.log(sumFibs(75024));// should return 60696.
   //console.log(sumFibs(75025));// should return 135721.
+  
+//
+//
+/************************************ 13. Sum All Primes ************/
+/*
+A prime number is a whole number greater than 1 with exactly two divisors: 1 and itself.
+For example, 2 is a prime number because it is only divisible by 1 and 2. In contrast, 4 is not prime since it is divisible by 1, 2 and 4.
+
+Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
+*/
+function sumPrimes(num) {
+    let sum=0;
+    //lets iterate thru all numbers greater than one and less or equal to num, check if they are prime and calculate their sum
+    for(let i=2; i<=num; i++){
+        if(isPrime(i)){
+            sum=sum+i;
+        }
+    }
+    return sum;
+}
+function isPrime(num){
+    //1 and 0 are not prime
+    if(num==1 || num==0){
+        return false;
+    }
+    else{
+        for(let i=2; i<num; i++){
+            if(num % i == 0){
+                //so num is divisible by i ... num is not a prime number
+                return false;
+            }
+        }
+        //num is not divisible by any number greater than 1 and less than num .... num is prime
+        return true;
+    }
+}
+  
+console.log(sumPrimes(7));  
+console.log(sumPrimes(10));// should return 17.
+console.log(sumPrimes(977));// should return 73156.
