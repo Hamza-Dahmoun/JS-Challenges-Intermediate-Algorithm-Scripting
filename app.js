@@ -572,18 +572,18 @@ function smallestCommons(arr) {
     let notFound = true;
     let counter = 0;
     let result;
-    while(notFound) {
+    while (notFound) {
         let divisible = true;
         counter++;
-        for (let j = min + 1; j < max; j++) {            
-            if(!isDivisible(min*max*counter, j)){
+        for (let j = min + 1; j < max; j++) {
+            if (!isDivisible(min * max * counter, j)) {
                 divisible = false;
             }
         }
-        if(divisible){
+        if (divisible) {
             notFound = false;
-            result = min*counter*max;
-        }        
+            result = min * counter * max;
+        }
     }
     return result;
 }
@@ -596,8 +596,37 @@ function isDivisible(number, divider) {
     return false;
 }
 
-console.log(smallestCommons([1, 5]));// should return 60.
-console.log(smallestCommons([5, 1]));// should return 60.
-console.log(smallestCommons([2, 10]));// should return 2520.
-console.log(smallestCommons([1, 13]));// should return 360360.
-console.log(smallestCommons([23, 18]));// should return 6056820.
+//console.log(smallestCommons([1, 5]));// should return 60.
+//console.log(smallestCommons([5, 1]));// should return 60.
+//console.log(smallestCommons([2, 10]));// should return 2520.
+//console.log(smallestCommons([1, 13]));// should return 360360.
+//console.log(smallestCommons([23, 18]));// should return 6056820.
+
+//
+//
+/************************************ 15. Drop it ************/
+/*
+Given the array arr, iterate through and remove each element starting from the first element (the 0 index)
+until the function func returns true when the iterated element is passed through it.
+
+Then return the rest of the array once the condition is satisfied, otherwise, arr should be returned as an empty array.
+*/
+
+function dropElements(arr, func) {
+    let newArr = arr.slice();//newArr is a copy of arr
+    let resultArray = newArr.filter((currentElement) => func(currentElement));
+    if (resultArray.length != 0) {
+        let indexOf_firstElementSatisfied = arr.indexOf(resultArray[0]);
+        return arr.slice(indexOf_firstElementSatisfied);
+    }
+    else{
+        return [];
+    }
+}
+
+console.log(dropElements([1, 2, 3], function(n) {return n < 3; }));
+console.log(dropElements([1, 2, 3, 4], function (n) { return n >= 3; }));// should return [3, 4].
+console.log(dropElements([0, 1, 0, 1], function(n) {return n === 1;}));// should return [1, 0, 1].
+console.log(dropElements([1, 2, 3, 4], function (n) { return n > 5; }));// should return [].
+console.log(dropElements([1, 2, 3, 7, 4], function(n) {return n > 3;}));// should return [7, 4].
+console.log(dropElements([1, 2, 3, 9, 2], function(n) {return n > 2;}));// should return [3, 9, 2].
