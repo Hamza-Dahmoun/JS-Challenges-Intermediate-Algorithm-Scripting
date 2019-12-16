@@ -660,8 +660,31 @@ function checkArray(myArray, resultedArray){
 }
 
 
-console.log(steamrollArray([1, [2], [3, [[4]]]]));
-console.log(steamrollArray([[["a"]], [["b"]]]));// should return ["a", "b"].
-console.log(steamrollArray([1, [2], [3, [[4]]]]));// should return [1, 2, 3, 4].
-console.log(steamrollArray([1, [], [3, [[4]]]]));// should return [1, 3, 4].
-console.log(steamrollArray([1, {}, [3, [[4]]]]));// should return [1, {}, 3, 4].
+//console.log(steamrollArray([1, [2], [3, [[4]]]]));
+//console.log(steamrollArray([[["a"]], [["b"]]]));// should return ["a", "b"].
+//console.log(steamrollArray([1, [2], [3, [[4]]]]));// should return [1, 2, 3, 4].
+//console.log(steamrollArray([1, [], [3, [[4]]]]));// should return [1, 3, 4].
+//console.log(steamrollArray([1, {}, [3, [[4]]]]));// should return [1, {}, 3, 4].
+//
+//
+/************************************ 17. Binary Agents ************/
+/*
+ Return an English translated sentence of the passed binary string.
+
+The binary string will be space separated. 
+ */
+
+function binaryAgent(str) {
+    let array = str.split(" ");//this makes an array that each element in it is a binary code
+    //foreach element in the array:
+    //1- parse it into Integer using 'parseInt()',
+    //2- build a character out of it using 'String.fromCharCode()',
+    //3- join all the characters built using 'Array.join()'
+    return array.map(code => String.fromCharCode(parseInt(code, 2))).join("");
+  }
+  
+  console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
+  // should return "Aren't bonfires fun!?"
+
+  console.log(binaryAgent("01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000110 01110010 01100101 01100101 01000011 01101111 01100100 01100101 01000011 01100001 01101101 01110000 00100001"));
+  // should return "I love FreeCodeCamp!"
