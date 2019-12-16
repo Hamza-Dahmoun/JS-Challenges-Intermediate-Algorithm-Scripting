@@ -831,24 +831,30 @@ var Person = function (firstAndLast) {
     //'fullName' is a private variable
     let fullName = firstAndLast;
     this.getFullName = function () {
+        //return the fullName starting from the private variables
         return firstName + " " + lastName;
     };
     this.getFirstName = function () {
+        //return the firstName which is a private variable
         return firstName;
     };
     this.getLastName = function () {
+        //return the lastName which is a private variable
         return lastName;
     };
     this.setFirstName = function (newFirstName) {
+        //update the private variable firstName
         firstName = newFirstName;
     };
     this.setLastName = function (newLastName) {
+        //update the private variable lastName
         lastName = newLastName;
     };
     this.setFullName = function (newFullName) {
+        //update the private variable fullName
         fullName = newFullName;
         firstName = newFullName.split(" ")[0];
-         lastName = newFullName.split(" ")[1];
+        lastName = newFullName.split(" ")[1];
     };
 };
 
