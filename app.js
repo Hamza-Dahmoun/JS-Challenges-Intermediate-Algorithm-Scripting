@@ -683,8 +683,67 @@ function binaryAgent(str) {
     return array.map(code => String.fromCharCode(parseInt(code, 2))).join("");
   }
   
-  console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
+  //console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
   // should return "Aren't bonfires fun!?"
 
-  console.log(binaryAgent("01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000110 01110010 01100101 01100101 01000011 01101111 01100100 01100101 01000011 01100001 01101101 01110000 00100001"));
+  //console.log(binaryAgent("01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000110 01110010 01100101 01100101 01000011 01101111 01100100 01100101 01000011 01100001 01101101 01110000 00100001"));
   // should return "I love FreeCodeCamp!"
+
+  //
+//
+/************************************ 18. Everything Be True ************/
+/*
+Check if the predicate (second argument) is truthy on all elements of a collection (first argument).
+
+In other words, you are given an array collection of objects.
+The predicate pre will be an object property and you need to return true if its value is truthy. Otherwise, return false.
+
+In JavaScript, truthy values are values that translate to true when evaluated in a Boolean context.
+
+Remember, you can access object properties through either dot notation or [] notation.
+*/
+
+function truthCheck(collection, pre) {
+    // Is everyone being true?
+    return collection.every(obj => check(obj, pre));
+  }
+  function check(object, property){
+      if(object.hasOwnProperty(property) && object[property]) return true;
+      else return false;
+  }
+  
+  truthCheck([{"user": "Tinky-Winky", "sex": "male"},
+   {"user": "Dipsy", "sex": "male"},
+    {"user": "Laa-Laa", "sex": "female"},
+     {"user": "Po", "sex": "female"}],
+      "sex");
+  // should return true.
+
+  truthCheck([{"user": "Tinky-Winky", "sex": "male"},
+  {"user": "Dipsy"},
+  {"user": "Laa-Laa", "sex": "female"},
+  {"user": "Po", "sex": "female"}],
+  "sex");
+  // should return false.
+
+  truthCheck([{"user": "Tinky-Winky", "sex": "male", "age": 0},
+  {"user": "Dipsy", "sex": "male", "age": 3},
+  {"user": "Laa-Laa", "sex": "female", "age": 5},
+  {"user": "Po", "sex": "female", "age": 4}],
+  "age");
+  // should return false.
+
+  truthCheck([{"name": "Pete", "onBoat": true},
+  {"name": "Repeat", "onBoat": true},
+  {"name": "FastFoward", "onBoat": null}],
+  "onBoat");
+  // should return false
+  truthCheck([{"name": "Pete", "onBoat": true},
+  {"name": "Repeat", "onBoat": true, "alias": "Repete"},
+  {"name": "FastFoward", "onBoat": true}],
+  "onBoat");
+  // should return true
+  truthCheck([{"single": "yes"}], "single");// should return true
+  truthCheck([{"single": ""}, {"single": "double"}], "single");// should return false
+  truthCheck([{"single": "double"}, {"single": undefined}], "single");// should return false
+  truthCheck([{"single": "double"}, {"single": NaN}], "single");// should return false
