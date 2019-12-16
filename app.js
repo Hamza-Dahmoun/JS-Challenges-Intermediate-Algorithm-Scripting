@@ -765,43 +765,108 @@ sumTwoAnd(3) returns 5.
 If either argument isn't a valid number, return undefined.
  */
 function addTogether(...args) {
-    if(args.length==0){
+    if (args.length == 0) {
         //there is no args provided to the function .. lets return undefined
         return undefined;
-    } 
-    else{
+    }
+    else {
         //so there are arguments provided to the function
-        if(args.length>=2){
+        if (args.length >= 2) {
             //there are two or more arguments provided to the function, lets consider only the first two arguments
-            if(typeof(args[0]) != "number" || typeof(args[1]) != "number"){
+            if (typeof (args[0]) != "number" || typeof (args[1]) != "number") {
                 //so at least one of the first two arguments is not a number, lets return undefined
                 return undefined;
             }
-            else{
+            else {
                 //so both of the first two arguments are numbers, lets return their sum
-                return args[0]+args[1];
+                return args[0] + args[1];
             }
         }
-        else{//handling input of one argument
-            if(typeof(args[0]) != "number"){
+        else {//handling input of one argument
+            if (typeof (args[0]) != "number") {
                 //the only argument provided is not even a number, lets return undefined
                 return undefined;
-            } 
-            else{
+            }
+            else {
                 //lets return a function that will wait for another argument 'y' to be summed with the currently provided argument 'args[0]'
-                return function(y){
+                return function (y) {
                     //first lets check if the second argument newly provided is a number or not
-                    if(typeof(y) != "number") return undefined;
+                    if (typeof (y) != "number") return undefined;
                     else return args[0] + y;
                 };
-            }            
+            }
         }
     }
 }
 
 
-console.log(addTogether(2, 3));// should return 5.
-console.log(addTogether(2)(3));// should return 5.
-console.log(addTogether("http://bit.ly/IqT6zt"));// should return undefined.
-console.log(addTogether(2, "3"));// should return undefined.
-console.log(addTogether(2)([3]));// should return undefined.
+//console.log(addTogether(2, 3));// should return 5.
+//console.log(addTogether(2)(3));// should return 5.
+//console.log(addTogether("http://bit.ly/IqT6zt"));// should return undefined.
+//console.log(addTogether(2, "3"));// should return undefined.
+//console.log(addTogether(2)([3]));// should return undefined.
+
+//
+//
+/************************************ 20. Make a Person ************/
+/*
+Fill in the object constructor with the following methods below:
+
+getFirstName()
+getLastName()
+getFullName()
+setFirstName(first)
+setLastName(last)
+setFullName(firstAndLast)
+Run the tests to see the expected output for each method.
+The methods that take an argument must accept only one argument and it has to be a string.
+These methods must be the only available means of interacting with the object.
+*/
+var Person = function (firstAndLast) {
+    // Complete the method below and implement the others similarly
+    //'firstName' is a private variable
+    let firstName = firstAndLast.split(" ")[0];
+    //'lastName' is a private variable
+    let lastName = firstAndLast.split(" ")[1];
+    //'fullName' is a private variable
+    let fullName = firstAndLast;
+    this.getFullName = function () {
+        return firstName + " " + lastName;
+    };
+    this.getFirstName = function () {
+        return firstName;
+    };
+    this.getLastName = function () {
+        return lastName;
+    };
+    this.setFirstName = function (newFirstName) {
+        firstName = newFirstName;
+    };
+    this.setLastName = function (newLastName) {
+        lastName = newLastName;
+    };
+    this.setFullName = function (newFullName) {
+        fullName = newFullName;
+        firstName = newFullName.split(" ")[0];
+         lastName = newFullName.split(" ")[1];
+    };
+};
+
+
+var bob = new Person('Bob Ross');
+bob.getFullName();
+
+console.log(Object.keys(bob).length);// should return 6.
+console.log(bob.getFirstName());// should return "Bob".
+console.log(bob.getLastName());// should return "Ross".
+console.log(bob.getFullName());// should return "Bob Ross".
+bob.setFirstName("Haskell");
+console.log(bob.getFullName());// should return "Haskell Ross" after bob.setFirstName("Haskell").
+bob.setLastName("Curry");
+console.log(bob.getFullName());// should return "Haskell Curry" after bob.setLastName("Curry").
+bob.setFullName("Haskell Curry");
+console.log(bob.getFullName());// should return "Haskell Curry" after bob.setFullName("Haskell Curry").
+bob.setFullName("Haskell Curry");
+console.log(bob.getFirstName());// should return "Haskell" after bob.setFullName("Haskell Curry").
+bob.setFullName("Haskell Curry");
+console.log(bob.getLastName());// should return "Curry" after bob.setFullName("Haskell Curry").
