@@ -619,14 +619,49 @@ function dropElements(arr, func) {
         let indexOf_firstElementSatisfied = arr.indexOf(resultArray[0]);
         return arr.slice(indexOf_firstElementSatisfied);
     }
-    else{
+    else {
         return [];
     }
 }
 
-console.log(dropElements([1, 2, 3], function(n) {return n < 3; }));
-console.log(dropElements([1, 2, 3, 4], function (n) { return n >= 3; }));// should return [3, 4].
-console.log(dropElements([0, 1, 0, 1], function(n) {return n === 1;}));// should return [1, 0, 1].
-console.log(dropElements([1, 2, 3, 4], function (n) { return n > 5; }));// should return [].
-console.log(dropElements([1, 2, 3, 7, 4], function(n) {return n > 3;}));// should return [7, 4].
-console.log(dropElements([1, 2, 3, 9, 2], function(n) {return n > 2;}));// should return [3, 9, 2].
+//console.log(dropElements([1, 2, 3], function(n) {return n < 3; }));
+//console.log(dropElements([1, 2, 3, 4], function (n) { return n >= 3; }));// should return [3, 4].
+//console.log(dropElements([0, 1, 0, 1], function(n) {return n === 1;}));// should return [1, 0, 1].
+//console.log(dropElements([1, 2, 3, 4], function (n) { return n > 5; }));// should return [].
+//console.log(dropElements([1, 2, 3, 7, 4], function(n) {return n > 3;}));// should return [7, 4].
+//console.log(dropElements([1, 2, 3, 9, 2], function(n) {return n > 2;}));// should return [3, 9, 2].
+
+//
+//
+/************************************ 16. Steamroller ************/
+/*
+Flatten a nested array. You must account for varying levels of nesting.
+ */
+
+function steamrollArray(arr) {
+    // I'm a steamroller, baby
+    let newArr = arr.slice();//newArr is a copy of arr
+    var result = [];//this is going to be the flatted array
+    checkArray(newArr, result);
+    return result;
+}
+function checkArray(myArray, resultedArray){
+    //this function is a a recursion
+    return myArray.map(elt => {
+        if(!Array.isArray(elt)){
+            //so this is a simple element, it is not an array, lets push it
+            resultedArray.push(elt);
+            return elt;
+        }
+        else{
+            return checkArray(elt, resultedArray);
+        }
+    });
+}
+
+
+console.log(steamrollArray([1, [2], [3, [[4]]]]));
+console.log(steamrollArray([[["a"]], [["b"]]]));// should return ["a", "b"].
+console.log(steamrollArray([1, [2], [3, [[4]]]]));// should return [1, 2, 3, 4].
+console.log(steamrollArray([1, [], [3, [[4]]]]));// should return [1, 3, 4].
+console.log(steamrollArray([1, {}, [3, [[4]]]]));// should return [1, {}, 3, 4].
