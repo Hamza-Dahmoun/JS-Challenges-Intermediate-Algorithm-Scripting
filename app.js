@@ -645,15 +645,15 @@ function steamrollArray(arr) {
     checkArray(newArr, result);
     return result;
 }
-function checkArray(myArray, resultedArray){
+function checkArray(myArray, resultedArray) {
     //this function is a a recursion
     return myArray.map(elt => {
-        if(!Array.isArray(elt)){
+        if (!Array.isArray(elt)) {
             //so this is a simple element, it is not an array, lets push it
             resultedArray.push(elt);
             return elt;
         }
-        else{
+        else {
             return checkArray(elt, resultedArray);
         }
     });
@@ -681,15 +681,15 @@ function binaryAgent(str) {
     //2- build a character out of it using 'String.fromCharCode()',
     //3- join all the characters built using 'Array.join()'
     return array.map(code => String.fromCharCode(parseInt(code, 2))).join("");
-  }
-  
-  //console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
-  // should return "Aren't bonfires fun!?"
+}
 
-  //console.log(binaryAgent("01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000110 01110010 01100101 01100101 01000011 01101111 01100100 01100101 01000011 01100001 01101101 01110000 00100001"));
-  // should return "I love FreeCodeCamp!"
+//console.log(binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111"));
+// should return "Aren't bonfires fun!?"
 
-  //
+//console.log(binaryAgent("01001001 00100000 01101100 01101111 01110110 01100101 00100000 01000110 01110010 01100101 01100101 01000011 01101111 01100100 01100101 01000011 01100001 01101101 01110000 00100001"));
+// should return "I love FreeCodeCamp!"
+
+//
 //
 /************************************ 18. Everything Be True ************/
 /*
@@ -704,46 +704,104 @@ Remember, you can access object properties through either dot notation or [] not
 */
 
 function truthCheck(collection, pre) {
-    // Is everyone being true?
     return collection.every(obj => check(obj, pre));
-  }
-  function check(object, property){
-      if(object.hasOwnProperty(property) && object[property]) return true;
-      else return false;
-  }
-  
-  truthCheck([{"user": "Tinky-Winky", "sex": "male"},
-   {"user": "Dipsy", "sex": "male"},
-    {"user": "Laa-Laa", "sex": "female"},
-     {"user": "Po", "sex": "female"}],
-      "sex");
-  // should return true.
+}
+function check(object, property) {
+    if (object.hasOwnProperty(property) && object[property]) return true;
+    else return false;
+}
+/* 
+ truthCheck([{"user": "Tinky-Winky", "sex": "male"},
+  {"user": "Dipsy", "sex": "male"},
+   {"user": "Laa-Laa", "sex": "female"},
+    {"user": "Po", "sex": "female"}],
+     "sex");
+ // should return true.
 
-  truthCheck([{"user": "Tinky-Winky", "sex": "male"},
-  {"user": "Dipsy"},
-  {"user": "Laa-Laa", "sex": "female"},
-  {"user": "Po", "sex": "female"}],
-  "sex");
-  // should return false.
+ truthCheck([{"user": "Tinky-Winky", "sex": "male"},
+ {"user": "Dipsy"},
+ {"user": "Laa-Laa", "sex": "female"},
+ {"user": "Po", "sex": "female"}],
+ "sex");
+ // should return false.
 
-  truthCheck([{"user": "Tinky-Winky", "sex": "male", "age": 0},
-  {"user": "Dipsy", "sex": "male", "age": 3},
-  {"user": "Laa-Laa", "sex": "female", "age": 5},
-  {"user": "Po", "sex": "female", "age": 4}],
-  "age");
-  // should return false.
+ truthCheck([{"user": "Tinky-Winky", "sex": "male", "age": 0},
+ {"user": "Dipsy", "sex": "male", "age": 3},
+ {"user": "Laa-Laa", "sex": "female", "age": 5},
+ {"user": "Po", "sex": "female", "age": 4}],
+ "age");
+ // should return false.
 
-  truthCheck([{"name": "Pete", "onBoat": true},
-  {"name": "Repeat", "onBoat": true},
-  {"name": "FastFoward", "onBoat": null}],
-  "onBoat");
-  // should return false
-  truthCheck([{"name": "Pete", "onBoat": true},
-  {"name": "Repeat", "onBoat": true, "alias": "Repete"},
-  {"name": "FastFoward", "onBoat": true}],
-  "onBoat");
-  // should return true
-  truthCheck([{"single": "yes"}], "single");// should return true
-  truthCheck([{"single": ""}, {"single": "double"}], "single");// should return false
-  truthCheck([{"single": "double"}, {"single": undefined}], "single");// should return false
-  truthCheck([{"single": "double"}, {"single": NaN}], "single");// should return false
+ truthCheck([{"name": "Pete", "onBoat": true},
+ {"name": "Repeat", "onBoat": true},
+ {"name": "FastFoward", "onBoat": null}],
+ "onBoat");
+ // should return false
+ truthCheck([{"name": "Pete", "onBoat": true},
+ {"name": "Repeat", "onBoat": true, "alias": "Repete"},
+ {"name": "FastFoward", "onBoat": true}],
+ "onBoat");
+ // should return true
+ truthCheck([{"single": "yes"}], "single");// should return true
+ truthCheck([{"single": ""}, {"single": "double"}], "single");// should return false
+ truthCheck([{"single": "double"}, {"single": undefined}], "single");// should return false
+ truthCheck([{"single": "double"}, {"single": NaN}], "single");// should return false
+*/
+//
+//
+/************************************ 19. Arguments Optional ************/
+/*
+Create a function that sums two arguments together.
+If only one argument is provided, then return a function that expects one argument and returns the sum.
+
+For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+
+Calling this returned function with a single argument will then return the sum:
+
+var sumTwoAnd = addTogether(2);
+
+sumTwoAnd(3) returns 5.
+
+If either argument isn't a valid number, return undefined.
+ */
+function addTogether(...args) {
+    if(args.length==0){
+        //there is no args provided to the function .. lets return undefined
+        return undefined;
+    } 
+    else{
+        //so there are arguments provided to the function
+        if(args.length>=2){
+            //there are two or more arguments provided to the function, lets consider only the first two arguments
+            if(typeof(args[0]) != "number" || typeof(args[1]) != "number"){
+                //so at least one of the first two arguments is not a number, lets return undefined
+                return undefined;
+            }
+            else{
+                //so both of the first two arguments are numbers, lets return their sum
+                return args[0]+args[1];
+            }
+        }
+        else{//handling input of one argument
+            if(typeof(args[0]) != "number"){
+                //the only argument provided is not even a number, lets return undefined
+                return undefined;
+            } 
+            else{
+                //lets return a function that will wait for another argument 'y' to be summed with the currently provided argument 'args[0]'
+                return function(y){
+                    //first lets check if the second argument newly provided is a number or not
+                    if(typeof(y) != "number") return undefined;
+                    else return args[0] + y;
+                };
+            }            
+        }
+    }
+}
+
+
+console.log(addTogether(2, 3));// should return 5.
+console.log(addTogether(2)(3));// should return 5.
+console.log(addTogether("http://bit.ly/IqT6zt"));// should return undefined.
+console.log(addTogether(2, "3"));// should return undefined.
+console.log(addTogether(2)([3]));// should return undefined.
